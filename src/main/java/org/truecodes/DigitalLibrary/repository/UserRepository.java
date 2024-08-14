@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "select * from user where :q",nativeQuery = true)
+
     List<User> findUsersByNativeQuery(String q);
 }
