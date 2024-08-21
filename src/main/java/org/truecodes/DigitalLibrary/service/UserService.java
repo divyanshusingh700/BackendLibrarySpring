@@ -38,15 +38,20 @@ public class UserService {
                     .append(operator1.getValue())
                     .append("'")
                     .append(finalValue)
-                    .append("'");
+                    .append("'").append(" and ");
 //            switch (userFilterType){
 //                case NAME:
 //                    return
 //                case EMAIL:
 //            }
         }
-        logger.info("query is : "+ query.toString());
-        return userRepository.findUsersByNativeQuery(query.toString());
 
+        logger.info("query is : "+ query.substring(0,query.length()-4));
+        return userRepository.findUsersByNativeQuery(query.substring(0,query.length()-4));
+
+    }
+
+    public User getStudentByPhoneNo(String userPhoneNo) {
+        return userRepository.findByPhoneNoAndUserType(userPhoneNo, UserType.STUDENT);
     }
 }

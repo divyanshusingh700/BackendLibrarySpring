@@ -27,6 +27,8 @@ public class Txn {
 
     private String txnId;
 
+    private int settlementAmount;
+
     @ManyToOne
     @JoinColumn
     private User user;

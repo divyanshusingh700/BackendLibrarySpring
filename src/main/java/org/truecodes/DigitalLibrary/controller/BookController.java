@@ -28,7 +28,7 @@ public class BookController {
         return book;
     }
     @GetMapping("/filter")
-    public List<Book> findByTitle(@RequestParam("filterBy") BookFilterType filterType,
+    public List<Book> filter(@RequestParam("filterBy") BookFilterType filterType,
                                   @RequestParam("operator")Operator operator,
                                   @RequestParam("value")String value){
         return bookService.filter(filterType, operator, value);
