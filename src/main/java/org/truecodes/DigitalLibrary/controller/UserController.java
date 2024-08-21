@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/filter")
-    public List<User> findByTitle(@RequestParam("filterBy") String filterBy,
+    public List<User> filter(@RequestParam("filterBy") String filterBy,
                                   @RequestParam("operator") String operator,
                                   @RequestParam("value")String values){
         return userService.filter(filterBy, operator, values);
