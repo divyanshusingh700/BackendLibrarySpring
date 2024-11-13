@@ -19,12 +19,16 @@ public class BookRequest {
     private String bookTitle;
     @NotBlank(message = "book number should not be blank")
     private String bookNo;
+
     @NotBlank(message = "author Name should not be blank")
     private String authorName;
+
     @NotBlank(message = "author Email should not be blank")
     private String authorEmail;
+
     @NotNull(message = "type should not be null")
     private BookType type;
+
     @Positive(message = "security Amount should be Positive")
     private int securityAmount;
 

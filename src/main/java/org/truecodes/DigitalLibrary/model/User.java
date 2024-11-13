@@ -1,5 +1,6 @@
 package org.truecodes.DigitalLibrary.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -46,6 +47,7 @@ public class User {
     private List<Book> bookList;
 
     @OneToMany(mappedBy="user")
+    @JsonIgnoreProperties(value = {"user","book"})
     private List<Txn> txnList;
 
 }
