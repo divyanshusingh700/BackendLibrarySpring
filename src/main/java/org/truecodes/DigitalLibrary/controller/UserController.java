@@ -1,5 +1,6 @@
 package org.truecodes.DigitalLibrary.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.truecodes.DigitalLibrary.dto.UserRequest;
@@ -15,16 +16,18 @@ public class UserController {
     @Autowired
     private UserService userService;
     @PostMapping("/addStudent")
-    public User addStudent(@RequestBody UserRequest userRequest){
+    public User addStudent(@RequestBody @Valid UserRequest userRequest){
         return userService.addStudent(userRequest);
     }
 
     @PostMapping("/addAdmin")
-    public User addAdmin(@RequestBody UserRequest userRequest){
-//        userService.addAdmin(userRequest);
+    public User addAdmin(@RequestBody @Valid UserRequest userRequest){
+        return userService.addAdmin(userRequest);
+    }
+    @GetMapping("/getStudent")
+    public User addAdmin(){
         return null;
     }
-
     @GetMapping("/filter")
     public List<User> filter(@RequestParam("filterBy") String filterBy,
                                   @RequestParam("operator") String operator,

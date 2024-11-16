@@ -22,6 +22,9 @@ public class UserRequest {
 
     private String address;
 
+    @NotBlank(message = "user password should not be blank")
+    private String password;
+
     public User toUser() {
         return User
                 .builder()
@@ -30,6 +33,7 @@ public class UserRequest {
                 .phoneNo(this.phoneNo)
                 .address(this.address)
                 .userStatus(UserStatus.ACTIVE)
+                .password("")
                 .build();
     }
 }

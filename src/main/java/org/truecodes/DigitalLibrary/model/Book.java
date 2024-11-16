@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.nio.MappedByteBuffer;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 @Builder
 @ToString
 @Entity //class should be connected to database
-public class Book {
+public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -47,7 +48,7 @@ public class Book {
     @UpdateTimestamp // when this row gets updated it will notify the time
     private Date updatedOn;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER)
     private List<Txn> txnList;
 
 }

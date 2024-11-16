@@ -1,13 +1,21 @@
 package org.truecodes.DigitalLibrary.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -16,7 +24,7 @@ import java.util.List;
 @Builder
 @ToString
 @Entity //class should be connected to database
-public class User {
+public class User implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +32,9 @@ public class User {
 
     @Column(length = 30)// by default 255
     private String name;
+
+    private String password;
+    private String authorities;
 
     @Column(nullable = false, unique = true,length = 15)
     private String phoneNo;
@@ -43,11 +54,47 @@ public class User {
     private UserType userType;
     private String address;
 
-    @OneToMany(mappedBy="user")
+    @JsonIgnore
+    @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
     private List<Book> bookList;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = {"user","book"})
     private List<Txn> txnList;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        String[] auth = authorities.split(",");
+        return Arrays.stream(auth).map(a->new SimpleGrantedAuthority(a)).collect(Collectors.toList());
+    }
+
+    @Override
+    public String getPassword() {
+        return "";
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
